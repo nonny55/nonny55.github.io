@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPA Data For Power BI</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg,#f0f4f8, #d9e2ec);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 960px;
+      width: 100%;
+      padding: 1rem;
+    }
+    .slide {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .slide img {
+      max-width: 100%;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .slide-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .pagination {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .pagination button {
+      background: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 999px;
+      width: 12px;
+      height: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .pagination button.active {
+      background: #0077ff;
+      border-color: #0077ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="slides"></div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+
+  <script>
+    const slidesData = [
+      { title: "สถิติหน้า 1", image: "1.png" },  //ใส่รูปภาพข้อมูล
+      { title: "สถิติหน้า 2", image: "2.png" },  //ใส่รูปภาพข้อมูล
+      { title: "สถิติหน้า 3", image: "3.png" },  //ใส่รูปภาพข้อมูล
+      { title: "สถิติหน้า 4", image: "4.png" },  //ใส่รูปภาพข้อมูล
+      { title: "สถิติหน้า 4", image: "5.png" },
+      { title: "สถิติหน้า 5", image: "6.png" }   //ใส่รูปภาพข้อมูล
+    ];
+
+
+    const slidesContainer = document.getElementById('slides');
+    const paginationContainer = document.getElementById('pagination');
+
+
+    let currentSlide = 0;
+
+
+    function renderSlide(index) {
+      slidesContainer.innerHTML = '';
+      const slide = document.createElement('div');
+      slide.className = 'slide';
+      slide.innerHTML = `
+        <img src="${slidesData[index].image}" alt="${slidesData[index].title}" />
+        <div class="slide-title">${slidesData[index].title}</div>
+      `;
+      slidesContainer.appendChild(slide);
+
+
+      document.querySelectorAll('.pagination button').forEach((btn, i) => {
+        btn.classList.toggle('active', i === index);
+      });
+    }
+
+
+    slidesData.forEach((_, i) => {
+      const btn = document.createElement('button');
+      btn.addEventListener('click', () => {
+        currentSlide = i;
+        renderSlide(currentSlide);
+      });
+      paginationContainer.appendChild(btn);
+    });
+
+
+    renderSlide(currentSlide);
+  </script>
+</body>
+</html>
+
